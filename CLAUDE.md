@@ -35,8 +35,10 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 200-299   | The Odyssey         | Portal item exists |
 | 300-399   | Blade Runner        | Portal item exists |
 | 400-499   | The Princess Bride  | Portal item exists |
-| 500-599   | Starry Night        | Portal item exists |
-| 600+      | Future worlds       | Available   |
+| 500-599   | Starry Night        | Built       |
+| 600-699   | Beetlejuice         | Built       |
+| 700-799   | Those Winter Sundays | Built      |
+| 800+      | Future worlds       | Available   |
 | 900+      | Tutorial (system)   | Inherited   |
 
 ## Mob ID Allocation
@@ -44,7 +46,10 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 |-----------|----------------|
 | 1-9       | System (rat, guard, guide - inherited) |
 | 10-19     | Wonderland     |
-| 20-29     | (next world)   |
+| 20-39     | Beetlejuice    |
+| 40-49     | Starry Night   |
+| 50-59     | (available)    |
+| 60-69     | Those Winter Sundays |
 | 100+      | Library (Librarian=100) |
 
 ## Item ID Allocation
