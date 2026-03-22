@@ -23,13 +23,31 @@ chown storyworlds:storyworlds /opt/storyworlds
 # Open firewall ports (Oracle Ubuntu uses iptables by default)
 echo "[3/4] Opening firewall ports..."
 # Check if iptables rules already exist
-if ! iptables -C INPUT -p tcp --dport 33333 -j ACCEPT 2>/dev/null; then
-    iptables -I INPUT 6 -p tcp --dport 33333 -j ACCEPT
-    echo "  Opened port 33333 (telnet)"
+# Insert before any REJECT rule (Oracle Linux/Ubuntu default has a REJECT at the end)
+REJECT_LINE=$(iptables -L INPUT --line-numbers -n | grep REJECT | head -1 | awk '{print $1}')
+if [ -n "$REJECT_LINE" ]; then
+    INSERT_AT=$REJECT_LINE
+else
+    INSERT_AT=""
 fi
+
 if ! iptables -C INPUT -p tcp --dport 80 -j ACCEPT 2>/dev/null; then
-    iptables -I INPUT 6 -p tcp --dport 80 -j ACCEPT
+    if [ -n "$INSERT_AT" ]; then
+        iptables -I INPUT "$INSERT_AT" -p tcp --dport 80 -j ACCEPT
+    else
+        iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+    fi
     echo "  Opened port 80 (web client)"
+fi
+if ! iptables -C INPUT -p tcp --dport 33333 -j ACCEPT 2>/dev/null; then
+    # Recalculate position after inserting port 80
+    REJECT_LINE=$(iptables -L INPUT --line-numbers -n | grep REJECT | head -1 | awk '{print $1}')
+    if [ -n "$REJECT_LINE" ]; then
+        iptables -I INPUT "$REJECT_LINE" -p tcp --dport 33333 -j ACCEPT
+    else
+        iptables -A INPUT -p tcp --dport 33333 -j ACCEPT
+    fi
+    echo "  Opened port 33333 (telnet)"
 fi
 
 # Save iptables rules to persist across reboots

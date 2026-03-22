@@ -21,16 +21,21 @@ echo "Project: $PROJECT_DIR"
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
-# Cross-compile for Linux ARM64 (Oracle Cloud Always Free)
-echo "[1/4] Cross-compiling for linux/arm64..."
+# Cross-compile for Linux
+# Set ARCH=arm64 for Ampere A1, or amd64 for E2.1.Micro
+ARCH="${ARCH:-amd64}"
+echo "[1/4] Cross-compiling for linux/$ARCH..."
 cd "$PROJECT_DIR/engine"
 go generate 2>/dev/null || true
-GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -trimpath -o "$BUILD_DIR/storyworlds-server" .
+GOOS=linux GOARCH="$ARCH" CGO_ENABLED=0 go build -trimpath -o "$BUILD_DIR/storyworlds-server" .
 echo "  Binary: $(ls -lh "$BUILD_DIR/storyworlds-server" | awk '{print $5}')"
 
 # Copy data files
 echo "[2/4] Copying data files..."
-cp -r "$PROJECT_DIR/engine/_datafiles" "$BUILD_DIR/_datafiles"
+rsync -a --exclude='._*' --exclude='.DS_Store' --exclude='users/*' "$PROJECT_DIR/engine/_datafiles/" "$BUILD_DIR/_datafiles/"
+# Copy admin user separately (has the updated password)
+mkdir -p "$BUILD_DIR/_datafiles/world/storyworlds/users"
+cp "$PROJECT_DIR/engine/_datafiles/world/storyworlds/users/1.yaml" "$BUILD_DIR/_datafiles/world/storyworlds/users/" 2>/dev/null || true
 cp "$PROJECT_DIR/config.yaml" "$BUILD_DIR/config.yaml"
 cp "$PROJECT_DIR/deploy/storyworlds.service" "$BUILD_DIR/storyworlds.service"
 cp "$PROJECT_DIR/deploy/setup-server.sh" "$BUILD_DIR/setup-server.sh"
