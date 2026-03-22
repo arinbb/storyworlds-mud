@@ -1,13 +1,14 @@
 FilePaths:
   DataFiles: _datafiles/world/storyworlds
+Network:
+  HttpPort: 80
+  TelnetPort:
+  - 33333
 Server:
   CurrentVersion: 0.9.1
   Motd: Welcome to StoryWorlds - Step into the pages and screens of your favorite
     fictional worlds.
   MudName: StoryWorlds
-Network:
-  HttpPort: 80
-  TelnetPort:
-    - 33333
+  NextRoomId: 1113
 SpecialRooms:
   StartRoom: 1
