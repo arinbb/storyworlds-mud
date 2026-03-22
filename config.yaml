@@ -1,0 +1,9 @@
+################################################################################
+# StoryWorlds MUD - Custom Configuration Override
+# Run with: CONFIG_PATH=../../config.yaml
+################################################################################
+
+Server:
+  MudName: "StoryWorlds"
+  DataFiles: _datafiles/world/storyworlds
+  Motd: "Welcome to StoryWorlds - Step into the pages and screens of your favorite fictional worlds."

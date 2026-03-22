@@ -1,0 +1,4 @@
+- [project_vision.md](project_vision.md) - Literary/cinematic MUD concept and goals
+- [feedback_git_backups.md](feedback_git_backups.md) - User wants regular git commits
+- [gomud_architecture.md](gomud_architecture.md) - GoMUD engine architecture reference (comprehensive API, all systems)
+- [WORLD_EXTRACTION_GUIDE.md](WORLD_EXTRACTION_GUIDE.md) - How to decompose any fictional work into MUD content (8 categories + master checklist)
