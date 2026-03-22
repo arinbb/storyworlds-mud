@@ -1,151 +1,310 @@
 # StoryWorlds Zone Framework
 
-A reusable system for creating new fictional world zones in the StoryWorlds MUD.
+A comprehensive guide for creating rich, interactive fictional world zones in the StoryWorlds MUD. Each zone is an immersive homage to its source material — exploration and atmosphere over combat.
 
 ## Architecture Overview
 
 ```
 Library Hub (rooms 1-99)
-  ├── Book Stacks → Books (items 50001-50099)
-  ├── Screening Room → Film Reels (items 50100-50199)
-  └── Gallery → Paintings (items 50200-50299)
+  ├── Book Stacks (room 2)     → Books (portal items)
+  ├── Screening Room (room 3)  → Film Reels (portal items)
+  ├── Gallery (room 4)         → Paintings (portal items)
+  └── Deep Stacks (room 6)     → Rare/powerful books
 
 Each media item transports player to a zone:
-  Wonderland (rooms 100-199)
-  Odyssey (rooms 200-299)
-  Blade Runner (rooms 300-399)
-  Princess Bride (rooms 400-499)
-  Starry Night (rooms 500-599)
-  ... (each new world gets a 100-room block)
+  Wonderland (100-199)       Starry Night (500-599)
+  The Odyssey (200-299)      Beetlejuice (600-699)
+  Blade Runner (300-399)     Those Winter Sundays (700-799)
+  Princess Bride (400-499)   Pee-wee's Big Adventure (800-899)
 ```
 
-## Room ID Allocation
+## What Makes a Great StoryWorlds Zone
 
-| Range     | Zone                |
-|-----------|---------------------|
-| 1-99      | Library Hub         |
-| 100-199   | Wonderland          |
-| 200-299   | The Odyssey         |
-| 300-399   | Blade Runner        |
-| 400-499   | The Princess Bride  |
-| 500-599   | Starry Night        |
-| 600-699   | (next world)        |
-| 700-799   | (next world)        |
-| 900+      | Tutorial (system)   |
+A successful zone captures the **feeling** of the source material, not just the plot. Players should recognize the world through atmosphere, character interactions, and interactive details. Key principles:
 
-## Creating a New Story World Zone
+1. **Atmosphere first** — 5+ idle messages per room (sight, sound, smell, NPC activity, environment)
+2. **Nouns everywhere** — every notable object in a description should be a lookable noun
+3. **Interactive verbs** — custom commands that let players engage with the world (dance, search, light, touch, squeeze)
+4. **NPCs that feel alive** — idle commands, onAsk dialogue with 5+ topics, onShow reactions, NPC-to-NPC conversations
+5. **Easter eggs** — hidden interactions that reward exploration with XP (one-time per player via MiscCharacterData)
+6. **Mutators** — zone-wide environmental effects with thematic buffs
+7. **Secrets** — hidden exits, rooms only found by searching or doing something clever
+8. **Souvenirs** — collectible items that evoke the source material
 
-### Step 1: Create the zone folder
-```
+## Room ID & Mob ID Allocation
+
+| Range     | Zone                    | Mob IDs  |
+|-----------|-------------------------|----------|
+| 1-99      | Library Hub             | 100+     |
+| 100-199   | Wonderland              | 10-19    |
+| 200-299   | The Odyssey             | —        |
+| 300-399   | Blade Runner            | —        |
+| 400-499   | The Princess Bride      | —        |
+| 500-599   | Starry Night            | 40-49    |
+| 600-699   | Beetlejuice             | 20-39    |
+| 700-799   | Those Winter Sundays    | 60-69    |
+| 800-899   | Pee-wee's Big Adventure | 70-79    |
+| 900+      | Tutorial (system)       | 1-9      |
+
+## Step-by-Step Zone Creation
+
+### Step 1: Decompose the Source Material
+
+Before writing any YAML, extract these 8 categories from the fictional work:
+
+1. **PLACES → Rooms** — every distinct location becomes a room. Sketch a top-down map first. Use cardinal directions for geography, custom named exits for thematic connections. 10-20 rooms per zone is ideal.
+
+2. **CHARACTERS → Mobs** — every named character, creature, or significant presence. Non-combat NPCs need: 3-5 idle commands, 3-5 ask topics, onShow/onGive reactions.
+
+3. **OBJECTS → Items** — plot-critical objects, iconic props, collectible souvenirs. Portal object (transport), progression objects (gate movement), atmosphere objects (lore).
+
+4. **SCENES → Scripted Events** — iconic moments become room scripts. onEnter for arrival scenes, onCommand for triggered scenes, onIdle for recurring atmospheric events.
+
+5. **ATMOSPHERE → Environmental Systems** — weather via mutators, darkness via biome, sensory palette via ANSI color theming, time-sensitivity via UtilIsDay().
+
+6. **NARRATIVE ARC → Quest System** — primary quest = "experience the story" (visit locations, meet characters, witness scenes). Secret quests for deep-cut references. Don't require combat for primary quest.
+
+7. **RELATIONSHIPS → Conversation System** — character dynamics via conversation YAMLs, onAsk gossip, paired spawning.
+
+8. **THEMES → Mechanical Expression** — the source material's themes should manifest as game mechanics. Examples: isolation → empty rooms with eerie idle messages, madness → contradictory connections, love → invisible labor (Those Winter Sundays).
+
+### Step 2: Create the Zone Structure
+
+```bash
 mkdir -p engine/_datafiles/world/storyworlds/rooms/<zone_name>
 mkdir -p engine/_datafiles/world/storyworlds/mobs/<zone_name>/scripts
+mkdir -p engine/_datafiles/world/storyworlds/conversations/<zone_name>
 ```
 
-### Step 2: Zone config (zone-config.yaml)
+### Step 3: Zone Config
+
 ```yaml
 name: <Display Name>
-roomid: <first room ID, e.g. 300>
+roomid: <first room ID>
 autoscale:
   minimum: 1
   maximum: 5
-defaultbiome: <biome>  # city, forest, dungeon, cave, water, house, etc.
+defaultbiome: <biome>
+mutators:
+- mutatorid: <zone-mutator-id>
 idlemessages:
-- <atmospheric message 1>
-- <atmospheric message 2>
-- <atmospheric message 3>
-- <atmospheric message 4>
+- <6+ zone-wide atmospheric messages>
 ```
 
-### Step 3: Entry room (must handle "return" command)
-Every story world's entry room MUST include a script with the return handler:
+**Zone mutators** apply environmental effects to the entire zone. Create a matching mutator YAML in `mutators/` and buff YAML+JS in `buffs/`. Good buff flags for exploration zones:
+- `see-nouns` — players notice more lookable objects
+- `see-hidden` — secret exits become visible
+- `nightvision` / `lightsource` — see in dark biomes
+- `superhearing` — hear more ambient sounds
+- `warmed` — counter cold environments
+
+### Step 4: Room YAML Files
+
+```yaml
+roomid: <id>
+zone: <Zone Display Name>
+title: <Room Title>
+description: >-
+  Rich description using ANSI tags for interactive elements:
+  <ansi fg="itemname">lookable nouns</ansi>
+  <ansi fg="exit">visible exits</ansi>
+  <ansi fg="secret-exit">hidden exits</ansi>
+mapsymbol: <single char>
+maplegend: <legend text>
+biome: <biome type>
+exits:
+  north:
+    roomid: <id>
+    exitmessage: <what player sees when leaving>
+  <custom_exit_name>:
+    roomid: <id>
+    secret: true  # hidden, found via search
+nouns:
+  <object>: >-
+    Detailed description. Every notable item mentioned in the room
+    description should have a noun entry. This is where the real
+    depth of the world lives — players who look at things are rewarded
+    with rich detail, lore, and atmosphere.
+containers:
+  <container_name>: {}
+spawninfo:
+- mobid: <id>
+  message: "Spawn message when mob first appears."
+- itemid: <id>
+  container: <container_name>
+  respawnrate: 1 real minutes
+idlemessages:
+- <sight — what the player sees happening>
+- <sound — what they hear>
+- <smell or sensation — what they feel>
+- <NPC or creature activity>
+- <environmental change — weather, light, movement>
+- <thematic detail specific to the source material>
+```
+
+**Critical rules:**
+- Nouns are flat `key: string` pairs, NOT nested maps
+- No `sign:` or `signtext:` in room YAML (signs are runtime-only)
+- Zone name in YAML must match zone-config.yaml `name:` field exactly
+- Idle messages with colons must be single-quoted: `'A voice says: "hello"'`
+
+### Step 5: Room Script Files (.js)
+
+Every room needs a `.js` file. At minimum, the return handler:
 
 ```javascript
-// entry_room.js - TEMPLATE
 var LIBRARY_ROOM = 1;
-
 function onCommand(cmd, rest, user, room) {
     if (cmd == "return") {
-        SendUserMessage(user.UserId(), "<ansi fg=\"cyan\">[Departure description]</ansi>");
-        SendRoomMessage(room.RoomId(), user.GetCharacterName(true) + " [departure message for others]", user.UserId());
+        SendUserMessage(user.UserId(), "<ansi fg=\"cyan\">[Thematic departure description]</ansi>");
+        SendRoomMessage(room.RoomId(), user.GetCharacterName(true) + " [what others see].", user.UserId());
         user.MoveRoom(LIBRARY_ROOM);
         return true;
     }
-    // ... other custom interactions
     return false;
 }
+```
 
+**Entry room** also needs `onEnter`:
+```javascript
 function onEnter(user, room) {
     SendUserMessage(user.UserId(), "");
-    SendUserMessage(user.UserId(), "<ansi fg=\"cyan\">[Arrival description]</ansi>");
+    SendUserMessage(user.UserId(), "<ansi fg=\"14\">[Arrival description]</ansi>");
     SendUserMessage(user.UserId(), "");
     SendUserMessage(user.UserId(), "<ansi fg=\"3\">(Type 'return' at any time to go back to the Grand Library.)</ansi>");
     return false;
 }
 ```
 
-**IMPORTANT:** Every room in a story world should handle "return" in its script. Copy the return handler into each room's .js file so players can leave from anywhere.
+**ES5.1 ONLY** — no let/const, no arrow functions, no template literals.
 
-### Step 4: Create the portal item
+### Step 6: Interactive Room Scripts (the good stuff)
 
-**For books** (items/other-0/5XXXX-name.yaml):
-```yaml
-itemid: 5XXXX
-name: <Book Title>
-namesimple: book
-displayname: a copy of <ansi fg="itemname"><Book Title></ansi>
-description: <physical description of the book>
-type: object
-subtype: usable
-uses: 0
-value: 0
-```
-
-**For film reels** (items/other-0/5XXXX-name.yaml):
-```yaml
-itemid: 5XXXX
-name: <Film Title> film reel
-namesimple: reel
-displayname: a film reel labeled <ansi fg="itemname"><Film Title></ansi>
-description: <physical description of the reel>
-type: object
-subtype: usable
-uses: 0
-value: 0
-```
-
-**For paintings** (items/other-0/5XXXX-name.yaml):
-```yaml
-itemid: 5XXXX
-name: <Painting Title> painting
-namesimple: painting
-displayname: a framed print of <ansi fg="itemname"><Painting Title></ansi>
-description: <physical description of the artwork>
-type: object
-subtype: usable
-uses: 0
-value: 0
-```
-
-### Step 5: Create the portal item script
+This is what makes zones come alive. Custom verb handlers let players interact with the world:
 
 ```javascript
-// Portal item script - TEMPLATE
-var DEST_ROOM = <entry room ID>;
-var WORLD_NAME = "<World Name>";
-var ENTER_MSG_SELF = "<what the player experiences>";
+// Easter egg with one-time XP reward
+if (cmd == "search" && rest.indexOf("basement") >= 0) {
+    SendUserMessage(user.UserId(), "<ansi fg=\"yellow\">There's no basement at the Alamo!</ansi>");
+    if (user.GetMiscCharacterData("easter_key") != "found") {
+        user.SetMiscCharacterData("easter_key", "found");
+        user.GrantXP(200, "discovering the secret");
+    }
+    return true;
+}
+
+// Interactive object that does something fun
+if (cmd == "squeeze" && rest.indexOf("chicken") >= 0) {
+    SendUserMessage(user.UserId(), "<ansi fg=\"yellow\">The rubber chicken honks.</ansi>");
+    SendRoomMessage(room.RoomId(), user.GetCharacterName(true) + " squeezes a rubber chicken.", user.UserId());
+    return true;
+}
+
+// Temporary exit that opens from interaction
+if (cmd == "pull" && rest.indexOf("lever") >= 0) {
+    room.AddTemporaryExit("hidden passage", "Hidden Passage", 305, "10 real minutes");
+    SendRoomMessage(room.RoomId(), "A hidden passage grinds open in the wall!");
+    return true;
+}
+```
+
+**Common interactive verbs to support:** look, search, touch, use, open, read, push, pull, turn, light, play, dance, drink, eat, squeeze, knock, wear, try, talk, listen, smell
+
+### Step 7: Mob YAML Files
+
+```yaml
+mobid: <id>
+zone: <zone_folder_name>  # lowercase with underscores
+hostile: false
+maxwander: <0-2>  # 0=stays put, 1-2=wanders nearby
+idlecommands:
+  - "say <dialogue>"
+  - "emote <action>"
+  - ''  # empty = pause (creates natural rhythm)
+  - ''
+activitylevel: <15-30>  # higher = more frequent idle actions
+character:
+  name: <Character Name>
+  description: >-
+    Rich physical description. What do they look like? What are they
+    doing? What mood do they project? Use sensory details.
+  raceid: 1  # human (or 27 for ghostly spirit, etc.)
+  level: <5-20>
+```
+
+**File naming:** `{id}-{name_converted}.yaml` — lowercase, skip apostrophes, non-alphanumeric → underscore. The `name` inside `character:` determines the filename the engine expects.
+
+### Step 8: Mob Scripts (onAsk, onShow, onGive)
+
+```javascript
+function onAsk(mob, room, eventDetails) {
+    var question = eventDetails.askText.toLowerCase();
+
+    // 5-7 topic handlers covering the character's knowledge
+    if (question.indexOf("topic") >= 0) {
+        mob.Command("say Response line 1.");
+        mob.Command("emote does something.", 2.0);  // delayed action
+        mob.Command("say Response line 2.", 3.5);    // further delay
+        return true;
+    }
+
+    // Default response — character stays in character
+    var defaults = [
+        "say Default response 1.",
+        "say Default response 2."
+    ];
+    var pick = Math.floor(Math.random() * defaults.length);
+    mob.Command(defaults[pick]);
+    return true;
+}
+
+function onShow(mob, room, eventDetails) {
+    var showText = String(eventDetails);
+    if (showText.indexOf("item_name") >= 0) {
+        mob.Command("say Reaction to seeing the item.");
+        return true;
+    }
+    mob.Command("emote looks at what you show them with interest.");
+    return true;
+}
+```
+
+### Step 9: NPC-to-NPC Conversations
+
+Create `conversations/<zone>/1.yaml` for ambient NPC dialogue:
+
+```yaml
+-
+  Supported:
+    "character a": ["character b"]  # names must be lowercase
+  Conversation:
+    - ["#1 say Opening line from character A."]
+    - ["#2 emote reacts", "#2 say Response from character B."]
+    - ["#1 say Follow-up line."]
+    - ["#2 say Closing response."]
+```
+
+Conversations trigger randomly when matching mobs share a room.
+
+### Step 10: Portal Items
+
+**Supported verbs by medium:**
+- Books: `read`, `open`, `use`, `enter`
+- Film reels: `load`, `play`, `use`, `watch`, `enter`
+- Paintings: `gaze`, `use`, `enter`, `touch`, `step`
+- Poetry: `read`, `open`, `use`, `enter`
+
+`enter` is the universal verb that works for all portal types.
+
+Portal item script template:
+```javascript
+var DEST_ROOM = <entry_room_id>;
+var ENTER_MSG_SELF = "<immersive transition description>";
 var ENTER_MSG_ROOM = "<what others see>";
 
-// Books respond to: open, read, use
-// Films respond to: load, use, play
-// Art responds to: gaze, use, enter
-
-function onCommand_<verb>(user, item, room) {
-    return enterWorld(user, item, room);
-}
-
-function onCommand_use(user, item, room) {
-    return enterWorld(user, item, room);
-}
+function onCommand_use(user, item, room) { return enterWorld(user, item, room); }
+function onCommand_enter(user, item, room) { return enterWorld(user, item, room); }
+// ... add medium-specific verbs
 
 function enterWorld(user, item, room) {
     SendUserMessage(user.UserId(), "");
@@ -156,128 +315,145 @@ function enterWorld(user, item, room) {
 }
 ```
 
-### Step 6: Place the item in the Library
-Add a spawninfo entry to the appropriate library room:
-- Books → rooms/library/2.yaml (Book Stacks)
-- Films → rooms/library/3.yaml (Screening Room)
-- Art → rooms/library/4.yaml (Gallery)
+Spawn the portal item in the Library:
+- Books → room 2 (Book Stacks), container: shelves
+- Films → room 3 (Screening Room), container: shelves
+- Art → room 4 (Gallery), container: wall
 
+### Step 11: Mutators & Buffs
+
+Create a zone-wide mutator for atmospheric effects:
+
+**Mutator YAML** (`mutators/<name>.yaml`):
 ```yaml
-spawninfo:
-- itemid: 5XXXX
-  container: shelves  # or "wall" for gallery
-  respawnrate: 1 real minutes
+mutatorid: <zone-name>
+namemodifier:
+  behavior: append
+  text: (<short descriptor>)
+  colorpattern: <color>
+descriptionmodifier:
+  behavior: append
+  text: <atmospheric sentence>
+  colorpattern: <color>
+alertmodifier:
+  text: <periodic alert message>
+  colorpattern: <color>
+playerbuffids: [<buff_id>]
 ```
 
-## Dynamic Content Patterns
-
-### Pattern 1: Interactive Objects (nouns)
-Use `nouns` in room YAML for things players can `look` at:
+**Buff YAML** (`buffs/<id>-<name>.yaml`):
 ```yaml
-nouns:
-  fountain:
-    description: >-
-      The fountain bubbles with mercury-colored liquid...
+buffid: <id>
+name: <Buff Name>
+description: <what the player feels>
+secret: false
+triggerrate: 10 real minutes
+triggercount: 1
+flags:
+  - see-nouns     # notice more details
+  - nightvision   # see in dark biomes
+  - superhearing  # hear more ambient sounds
 ```
 
-### Pattern 2: Custom Verb Interactions (room scripts)
-Handle custom commands in room `.js` files:
+**Buff script** (`buffs/<id>-<name>.js`):
 ```javascript
-function onCommand(cmd, rest, user, room) {
-    if (cmd == "drink" && rest.indexOf("fountain") >= 0) {
-        SendUserMessage(user.UserId(), "You drink from the fountain...");
-        return true;
-    }
-    return false;
+function onStart(actor) {
+    SendUserMessage(actor.UserId(), "<ansi fg=\"14\">You feel the zone's atmosphere wash over you...</ansi>");
+}
+function onEnd(actor) {
+    SendUserMessage(actor.UserId(), "<ansi fg=\"8\">The feeling fades.</ansi>");
 }
 ```
 
-### Pattern 3: Atmospheric NPCs (non-combat mobs)
-Create mobs that talk and emote but don't fight:
+Reference the mutator in zone-config.yaml:
 ```yaml
-# mob YAML
-hateraces: []
-angrycommands: []
-
-# In room spawninfo:
-spawninfo:
-- mobid: XX
-  idlecommands:
-  - say <dialogue line>
-  - ""            # empty string = do nothing (creates pauses)
-  - emote <action>
-  - wander        # mob wanders to adjacent rooms
+mutators:
+- mutatorid: <zone-name>
 ```
 
-### Pattern 4: NPC Conversations (ask system)
-Use mob scripts with `onAsk` for topic-based dialogue:
-```javascript
-function onAsk(mob, room, eventDetails) {
-    var question = eventDetails.askText.toLowerCase();
-    if (question.indexOf("treasure") >= 0) {
-        mob.Command("say Ah, the treasure? It lies beyond the...");
-        return true;
-    }
-    return true;
-}
-```
+### Step 12: Quest
 
-### Pattern 5: Scene Transitions (temporary exits)
-Create dramatic exits that appear based on actions:
-```javascript
-function onCommand(cmd, rest, user, room) {
-    if (cmd == "pull" && rest.indexOf("lever") >= 0) {
-        room.AddTemporaryExit("hidden passage", ":cyan", 305, "10 real minutes");
-        SendRoomMessage(room.RoomId(), "A hidden passage grinds open in the wall!");
-        return true;
-    }
-    return false;
-}
-```
-
-### Pattern 6: Idle Atmosphere
-Use `idlemessages` liberally for immersion. Aim for 5+ per room:
 ```yaml
-idlemessages:
-- <sight>
-- <sound>
-- <smell or sensation>
-- <NPC activity>
-- <environmental change>
+questid: <id>
+name: <Quest Name>
+description: >-
+  Brief description of the journey.
+reward:
+  experience: <3000-5000>
+  item_id: <souvenir_item_id>
+  playermessage: >-
+    Completion message with souvenir description.
+steps:
+- description: <step 1 — usually "enter the world">
+- description: <step 2 — meet a character or find something>
+- description: <step 3 — discover a key location>
+- description: <step 4 — interact with something iconic>
 ```
 
-### Pattern 7: Collectible Souvenirs
-Create items players can find in story worlds and bring back:
+### Step 13: Souvenir Item
+
 ```yaml
-itemid: 6XXXX
+itemid: <id>
 name: <souvenir name>
-description: <description with narrative significance>
+namesimple: <one word>
+displayname: a <ansi fg="itemname"><souvenir name></ansi>
+description: >-
+  A tangible reminder of the world. Should evoke the source
+  material's emotional core. Include sensory details.
 type: object
 subtype: usable
 uses: 0
 value: 1
 ```
 
-### Pattern 8: Danger/Combat Encounters
-For worlds that warrant it, add hostile mobs sparingly:
-```yaml
-spawninfo:
-- mobid: XX
-  forcehostile: true
-  respawnrate: 5 real minutes
-  message: <dramatic entrance>
-```
+## Multiplayer Safety Checklist
 
-## Biome Suggestions by Genre
+- Guard mob spawning: `if (room.GetMobs(id).length == 0) room.SpawnMob(id);`
+- Quest gates: use `user.HasQuest()`, NEVER room PermData for player-specific progression
+- Easter egg XP: one-time per player via `user.GetMiscCharacterData("key") != "found"`
+- Important items: create via `user.GiveItem(CreateItem(id))`, not floor spawns
+- Easter egg hints: always provide in-game hints (NPC idle chatter, room idle messages) so players can discover secrets without external knowledge
 
-| Genre          | Biome    | Notes                           |
-|----------------|----------|---------------------------------|
-| Fantasy        | forest   | Magic, medieval settings        |
-| Sci-Fi         | city     | Urban, futuristic               |
-| Horror         | dungeon  | Dark, confined                  |
-| Ocean/Naval    | water    | Seas, ships                     |
-| Interior       | house    | Rooms, buildings                |
-| Wilderness     | forest   | Natural settings                |
-| Underground    | cave     | Mines, tunnels                  |
-| Desert/Arid    | desert   | Barren landscapes               |
-| Mountain       | mountains| Peaks, passes                   |
+## File Naming Rules (CRITICAL — server PANICs on violations)
+
+1. **Items/Quests:** `{id}-{ConvertForFilename(name)}.yaml` — lowercase, skip apostrophes, non-alphanumeric → underscore
+2. **Items < 10000** go in `other-0/`. 10000-19999 = weapons, 20000-29999 = armor, 30000+ = consumables
+3. **Zone folders** must match zone config `name:` lowercased with spaces → underscores
+4. **Mob YAML:** `name`, `description`, `raceid`, `level` go INSIDE `character:` block
+5. **Room nouns:** flat `key: string` pairs, NOT nested maps
+6. **No sign/signtext in room YAML** — signs are runtime-only
+7. **Idle messages with colons** must be single-quoted
+8. **Conversation names** must be lowercase in Supported map
+
+## Biome Reference
+
+| Biome     | Dark? | Notes                              |
+|-----------|-------|------------------------------------|
+| cave      | Yes   | Underground, needs lightsource     |
+| dungeon   | Yes   | Confined, dark                     |
+| city      | No    | Urban, lit                         |
+| house     | No    | Interior, domestic                 |
+| forest    | No    | Natural, wooded                    |
+| land      | No    | Open country                       |
+| road      | No    | Paths, highways                    |
+| shore     | No    | Coastline                          |
+| water     | No    | Requires swimming                  |
+| desert    | No    | Arid                               |
+| mountains | No    | Peaks, passes                      |
+| farmland  | No    | Agricultural (burnable)            |
+| cliffs    | No    | Precipices                         |
+| snow      | No    | Cold landscapes                    |
+| swamp     | Yes   | Wetlands, murky                    |
+
+## Color Reference for ANSI Tags
+
+Semantic colors: `room-title`, `room-description`, `exit`, `secret-exit`, `mobname`, `username`, `itemname`, `stat`, `command`, `damage`, `healing`, `spell-helpful`
+
+Numeric colors: 0-15. Common choices:
+- `3` = dark cyan (hints, instructions)
+- `6` = cyan (cold, water, ice themes)
+- `14` = bright cyan/yellow (magical, ethereal)
+- `yellow` = warmth, discovery, treasure
+- `green` = nature, Pee-wee, whimsy
+- `blue` = sci-fi, rain, night
+- Color patterns for mutators: `flame`, `ice`, `rainbow`, `blue-white`
