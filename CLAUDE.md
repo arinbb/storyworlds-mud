@@ -292,6 +292,17 @@ See `WORLD_EXTRACTION_GUIDE.md` for the complete decomposition process. When add
 **Build:** zone config, entry room with return handler, all rooms, all room scripts, character mobs + scripts, conversation YAMLs, items + scripts, quest(s), mutators, portal item in Library.
 **Polish:** 5+ idle messages/room, 3+ idle commands/NPC, nouns in every room, sensory consistency, at least one secret, souvenir item, test walk-through.
 
+## Multiplayer Design Rules
+
+See `MULTIPLAYER_DESIGN.md` for complete rules. Key points:
+- **Per-user:** Quest state, TempData, MiscCharacterData, inventory. Safe for player-specific logic.
+- **Shared:** Room items (first-come-first-served + respawn), mobs, temporary exits, room PermData, idle messages.
+- **Guard mob spawning:** Always check `room.GetMobs(id).length == 0` before `room.SpawnMob(id)`.
+- **Quest gates:** Use `user.HasQuest()` or user data, NEVER room PermData for player-specific progression.
+- **Easter egg XP:** One-time per player using `user.GetMiscCharacterData("easter_key") != "found"`.
+- **Important items:** Create via `user.GiveItem(CreateItem(id))` in scripts, not floor spawns, to avoid race conditions.
+- **Easter egg hints:** Always provide in-game hints (NPC idle chatter, room idle messages, NPC-to-NPC conversations) so players can discover secrets without external knowledge.
+
 ## CRITICAL: GoMUD Naming & Format Rules
 
 See `GOMUD_RULES.md` for the complete list. Key rules that cause server PANIC if violated:

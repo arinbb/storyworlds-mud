@@ -200,7 +200,21 @@ steps:
 
 Quest filename must match: `{questid}-{ConvertForFilename(name)}.yaml`
 
-## 11. Script Rules (ECMAScript 5.1)
+## 11. NPC Wander Rules
+
+`maxwander` controls how many rooms from their spawn point a mob can travel. This MUST be thematically appropriate:
+
+- **maxwander: 0** — NPC stays in their spawn room. Use for: characters tied to a location (Adam at his workbench, Juno at her desk, a receptionist, a shopkeeper, a sandworm in its desert).
+- **maxwander: 1** — NPC moves to adjacent rooms only. Use for: domestic characters who move through a house, guards who patrol a small area.
+- **maxwander: 2+** — NPC roams freely. Use VERY sparingly. Verify the mob can't wander into thematically wrong zones (e.g., a sandworm leaving Saturn to appear in the waiting room).
+
+**Critical:** If a mob has `maxwander > 0`, verify ALL exits from their spawn room lead to places where the mob makes thematic sense. A sandworm with `maxwander: 2` whose room has an exit to the waiting room WILL eventually show up in the waiting room.
+
+**The `wander` idle command:** Adding `wander` to idle commands makes the mob actively try to move. Without it, mobs with `maxwander > 0` still move but less frequently. Only use `wander` for mobs that should feel restless or mobile.
+
+**SpawnInfo overrides:** `maxwander` in spawninfo overrides the mob YAML's `maxwander`. Both the mob definition AND the spawninfo need to agree.
+
+## 12. Script Rules (ECMAScript 5.1)
 
 - No `let` or `const` — use `var`
 - No arrow functions — use `function()`
