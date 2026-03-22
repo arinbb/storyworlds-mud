@@ -5,5 +5,7 @@ Server:
   Motd: Welcome to StoryWorlds - Step into the pages and screens of your favorite
     fictional worlds.
   MudName: StoryWorlds
+Network:
+  HttpPort: 8080
 SpecialRooms:
   StartRoom: 1

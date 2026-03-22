@@ -292,5 +292,21 @@ See `WORLD_EXTRACTION_GUIDE.md` for the complete decomposition process. When add
 **Build:** zone config, entry room with return handler, all rooms, all room scripts, character mobs + scripts, conversation YAMLs, items + scripts, quest(s), mutators, portal item in Library.
 **Polish:** 5+ idle messages/room, 3+ idle commands/NPC, nouns in every room, sensory consistency, at least one secret, souvenir item, test walk-through.
 
+## CRITICAL: GoMUD Naming & Format Rules
+
+See `GOMUD_RULES.md` for the complete list. Key rules that cause server PANIC if violated:
+
+1. **File naming:** `{id}-{ConvertForFilename(name)}.yaml` — lowercase, skip apostrophes, non-alphanum → underscore
+2. **Item IDs < 10000** go in `other-0/`. IDs 10000-19999 = weapons, 20000-29999 = armor, 30000+ = consumables
+3. **Zone folders** must match zone config `name:` lowercased with spaces → underscores
+4. **Mob YAML:** `name`, `description`, `raceid`, `level` go INSIDE `character:` block, not top-level. No `hateraces` field (use `hates`).
+5. **Room nouns:** flat `key: string` pairs, NOT nested maps with `description:`
+6. **No sign/signtext in room YAML.** Signs are runtime-only via `scribe` command.
+7. **ECMAScript 5.1 only** — no let/const, no arrow functions, no template literals.
+8. **Conversation names** must be lowercase in Supported map.
+9. **Quest filenames** follow same ConvertForFilename convention.
+
+**Always validate filenames before committing.** Run the server locally to catch panics early.
+
 ## Git
 Commit at natural milestones. Don't wait too long between commits.
