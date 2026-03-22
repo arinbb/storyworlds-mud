@@ -52,6 +52,30 @@ Zone folder names must match the zone config `name:` field, lowercased with spac
 | `Wonderland` | `wonderland/` |
 | `Frost Lake` | `frost_lake/` |
 
+## 3b. Containers Required for Container Spawns
+
+If spawninfo uses `container: name`, the room MUST have a matching `containers:` block. Without it, items spawn invisibly and players can't retrieve them.
+
+```yaml
+# CORRECT — container defined, items accessible
+containers:
+  shelves: {}
+spawninfo:
+- itemid: 101
+  container: shelves
+  respawnrate: 1 real minutes
+
+# WRONG — no containers block, items spawn but are unreachable
+spawninfo:
+- itemid: 101
+  container: shelves
+  respawnrate: 1 real minutes
+```
+
+Containers can also have locks: `shelves: {lock: {difficulty: 5}}`
+
+Players interact with: `look in shelves`, `get item from shelves`, `put item in shelves`
+
 ## 4. Mob YAML Structure
 
 Mobs use a NESTED `character:` block. Name, description, race, and level are NOT top-level fields.
