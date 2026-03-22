@@ -54,10 +54,8 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 10001-19999 | Weapons             |
 | 20001-29999 | Armor               |
 | 30001-39999 | Consumables         |
-| 50001-50099 | Portal Books        |
-| 50100-50199 | Portal Film Reels   |
-| 50200-50299 | Portal Paintings    |
-| 60001+      | Story world souvenirs/collectibles |
+| 101-109     | Portal Books/Film Reels/Paintings |
+| 110-199     | Story world souvenirs/collectibles |
 
 ## Running the Server
 ```bash

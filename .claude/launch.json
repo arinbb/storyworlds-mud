@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "storyworlds-mud",
+      "runtimeExecutable": "go",
+      "runtimeArgs": ["run", "."],
+      "port": 80,
+      "env": {
+        "CONFIG_PATH": "../config.yaml"
+      }
+    }
+  ]
+}
