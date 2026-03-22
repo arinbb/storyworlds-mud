@@ -6,6 +6,8 @@ Server:
     fictional worlds.
   MudName: StoryWorlds
 Network:
-  HttpPort: 8080
+  HttpPort: 80
+  TelnetPort:
+    - 33333
 SpecialRooms:
   StartRoom: 1

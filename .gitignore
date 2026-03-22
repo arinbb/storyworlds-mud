@@ -1,2 +1,4 @@
 firebase-debug.log
 GoMudServer
+deploy/build/
+deploy/deploy-bundle.tar.gz
