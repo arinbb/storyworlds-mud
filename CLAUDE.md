@@ -38,8 +38,10 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 500-599   | Starry Night        | Built       |
 | 600-699   | Beetlejuice         | Built       |
 | 700-799   | Those Winter Sundays | Built      |
-| 800+      | Future worlds       | Available   |
-| 900+      | Tutorial (system)   | Inherited   |
+| 800-899   | Pee-wee's Big Adventure | Built    |
+| 900-903   | Tutorial (system)   | Inherited   |
+| 950-969   | The Shining         | Built       |
+| 970+      | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -50,6 +52,8 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 40-49     | Starry Night   |
 | 50-59     | (available)    |
 | 60-69     | Those Winter Sundays |
+| 70-79     | Pee-wee's Big Adventure |
+| 80-89     | The Shining          |
 | 100+      | Library (Librarian=100) |
 
 ## Item ID Allocation
