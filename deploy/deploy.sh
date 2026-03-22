@@ -43,7 +43,7 @@ cp "$PROJECT_DIR/deploy/setup-server.sh" "$BUILD_DIR/setup-server.sh"
 # Create tarball
 echo "[3/4] Creating deployment bundle..."
 cd "$BUILD_DIR"
-tar czf "$PROJECT_DIR/deploy/deploy-bundle.tar.gz" \
+COPYFILE_DISABLE=1 tar czf "$PROJECT_DIR/deploy/deploy-bundle.tar.gz" \
     storyworlds-server \
     config.yaml \
     storyworlds.service \

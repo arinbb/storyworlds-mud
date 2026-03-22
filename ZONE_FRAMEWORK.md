@@ -2,14 +2,24 @@
 
 A comprehensive guide for creating rich, interactive fictional world zones in the StoryWorlds MUD. Each zone is an immersive homage to its source material — exploration and atmosphere over combat.
 
+## Core Philosophy
+
+**Celebrate, don't replicate.** The goal is never to reproduce a work of art but to honor its complexity through spatialized, text-based worlds — rooms, objects, and characters that evoke the spirit of the original. A zone should make players want to experience the source material, not replace the need to.
+
+**Embed knowledge, don't lecture.** Historical context, artist biography, production trivia, and cultural significance should be woven naturally into the world — through NPC dialogue, item descriptions, room nouns, and idle messages. A bartender who mentions the year. A prop that references real production details. A noun description that teaches you something without ever breaking the fourth wall. Players should leave knowing more about the work than when they entered, without ever feeling like they were in a classroom.
+
+**Every medium has its own language.** Books become rooms you read your way through. Films become scenes you step into. Paintings become landscapes of brushstrokes. Music becomes synesthetic spaces where sound has texture, color, and weight. Poetry becomes houses of feeling. Each portal type should transform the source material into spatial experience in a way that honors how that medium works.
+
 ## Architecture Overview
 
 ```
 Library Hub (rooms 1-99)
-  ├── Book Stacks (room 2)     → Books (portal items)
-  ├── Screening Room (room 3)  → Film Reels (portal items)
-  ├── Gallery (room 4)         → Paintings (portal items)
-  └── Deep Stacks (room 6)     → Rare/powerful books
+  ├── Book Stacks (room 2)      → Books, Poetry collections (portal items)
+  ├── Screening Room (room 3)   → Film Reels (portal items)
+  ├── Gallery (room 4)          → Paintings (portal items)
+  ├── Mezzanine Lounge (room 5) → Curiosities, overview
+  ├── Deep Stacks (room 6)      → Rare/powerful books
+  └── Listening Room (room 7)   → Vinyl LPs, Cassettes, CDs (portal items)
 
 Each media item transports player to a zone:
   Wonderland (100-199)       Starry Night (500-599)
@@ -293,6 +303,9 @@ Conversations trigger randomly when matching mobs share a room.
 - Film reels: `load`, `play`, `use`, `watch`, `enter`
 - Paintings: `gaze`, `use`, `enter`, `touch`, `step`
 - Poetry: `read`, `open`, `use`, `enter`
+- Vinyl LPs: `play`, `spin`, `use`, `enter`, `listen`
+- Cassette tapes: `play`, `insert`, `use`, `enter`, `listen`
+- CDs: `play`, `insert`, `use`, `enter`, `listen`
 
 `enter` is the universal verb that works for all portal types.
 
@@ -316,9 +329,10 @@ function enterWorld(user, item, room) {
 ```
 
 Spawn the portal item in the Library:
-- Books → room 2 (Book Stacks), container: shelves
+- Books/Poetry → room 2 (Book Stacks), container: shelves
 - Films → room 3 (Screening Room), container: shelves
 - Art → room 4 (Gallery), container: wall
+- Audio (LPs/Cassettes/CDs) → room 7 (Listening Room), container: shelf
 
 ### Step 11: Mutators & Buffs
 
@@ -405,6 +419,32 @@ subtype: usable
 uses: 0
 value: 1
 ```
+
+## Music Zone Design
+
+Music zones are unique — they translate audio art into spatial experience. Each room represents a track, and the design can take several approaches:
+
+- **Abstract/Synesthetic:** Sound becomes physical. Distortion is weather, melody is landscape, rhythm is architecture. A guitar riff might be a wall of fire. A cello note might be a still lake. The room IS the music.
+- **Era-Representative:** The world the music came from. A 1977 punk club, a 1960s coffeehouse, a 1993 recording studio. Period-accurate details, cultural context embedded naturally.
+- **Narrative/Concept:** For concept albums with stories (The Wall, Ziggy Stardust, Tommy), rooms follow the album's narrative arc.
+
+**Embedding music knowledge:** Production details become room nouns (the mixing board, the specific guitar model). Historical context lives in NPC dialogue (the sound engineer mentioning analog vs digital). Cultural significance is embedded in room descriptions (what the era looked and felt like). Players learn about the music and its context by exploring, not by reading liner notes.
+
+**Audio portal items** come in three era-appropriate formats:
+- **Vinyl LP** (pre-1980s) — turntable in the Listening Room
+- **Cassette Tape** (1970s-1990s) — tape deck in the Listening Room
+- **CD** (1990s-2000s) — CD player in the Listening Room
+
+Choose the format that matches the album's original or most iconic release format.
+
+## Generic NPCs
+
+Not every NPC needs a proper name. Use generic NPCs to add life and atmosphere:
+- "A Hotel Guest" (ghostly 1920s partygoer in The Shining)
+- "A Sound Engineer" (Steve Albini analog in In Utero)
+- "A Villager", "A Student", "A Bartender", "A Guard"
+
+Generic NPCs can wander, have idle commands, and even have onAsk topics. They add population density without requiring named characters from the source material.
 
 ## Multiplayer Safety Checklist
 
