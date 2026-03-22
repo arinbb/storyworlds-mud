@@ -41,7 +41,8 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 800-899   | Pee-wee's Big Adventure | Built    |
 | 900-903   | Tutorial (system)   | Inherited   |
 | 950-969   | The Shining         | Built       |
-| 970+      | Future worlds       | Available   |
+| 970-989   | The Hobbit          | Built       |
+| 990+      | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -54,6 +55,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 60-69     | Those Winter Sundays |
 | 70-79     | Pee-wee's Big Adventure |
 | 80-89     | The Shining          |
+| 90-99     | The Hobbit           |
 | 100+      | Library (Librarian=100) |
 
 ## Item ID Allocation
