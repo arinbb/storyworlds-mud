@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go:*)",
+      "Bash(kill:*)",
+      "Bash(lsof:*)",
+      "Bash(nc:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(chmod:*)",
+      "Bash(cd:*)",
+      "Bash(echo:*)",
+      "Bash(sleep:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(brew:*)",
+      "Bash(python3:*)",
+      "Bash(pip3:*)",
+      "Bash(curl:*)",
+      "Bash(sed:*)",
+      "Bash(printf:*)",
+      "Bash(export:*)",
+      "Bash(mkdir:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(tr:*)",
+      "Bash(MUD_DELAY:*)",
+      "Read",
+      "Edit",
+      "Write"
+    ]
+  }
+}
