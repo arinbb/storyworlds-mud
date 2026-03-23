@@ -73,7 +73,10 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 2200-2215 | The Wire            | Built       |
 | 2220-2233 | Six Feet Under      | Built       |
 | 2240-2250 | Harvest (Neil Young) | Built      |
-| 2300+     | Future worlds       | Available   |
+| 2300-2315 | The Office          | Built       |
+| 2320-2332 | Siamese Dream (Smashing Pumpkins) | Built |
+| 2340-2353 | Best in Show        | Built       |
+| 2400+     | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -119,6 +122,9 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 490-499   | The Wire                 |
 | 500-508   | Six Feet Under           |
 | 510-513   | Harvest (Neil Young)     |
+| 520-530   | The Office               |
+| 535-538   | Siamese Dream            |
+| 540-550   | Best in Show             |
 
 ## Item ID Allocation
 | Range       | Type                |
@@ -135,7 +141,13 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 137         | Super Mario Bros game cartridge (Game Disc portal type) |
 | 141         | Back to the Future film reel (portal) |
 | 157         | Harvest vinyl LP (portal)             |
+| 158         | The Office film reel (portal)         |
+| 159         | Siamese Dream CD (portal)             |
+| 162         | Best in Show film reel (portal)       |
 | 305         | Guitar pick (Harvest souvenir)        |
+| 310         | Worlds Best Boss mug (The Office souvenir) |
+| 315         | Big Muff pedal (Siamese Dream souvenir) |
+| 320         | Busy Bee dog toy (Best in Show souvenir) |
 | 20100-20130 | NPC clothing (body slot)              |
 | 20150-20157 | NPC clothing (legs slot)              |
 | 20160-20167 | NPC clothing (head slot)              |
@@ -146,10 +158,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 ## Backlog (planned, not yet built)
 | Work                        | Medium      | Portal Type    | Notes                                      |
 |-----------------------------|-------------|----------------|--------------------------------------------|
-| The Office                  | TV Series   | Film Reel      | Dunder Mifflin Scranton, mundane comedy     |
-| Best in Show                | Film        | Film Reel      | Dog show mockumentary, Mayflower Kennel Club|
 | Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
-| Siamese Dream (Smashing Pumpkins)| Album (1993)| CD        | Shoegaze, distortion, Chicago, Billy Corgan |
 ## Running the Server
 ```bash
 cd engine
