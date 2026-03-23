@@ -58,6 +58,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 1840-1855 | Far Cry 5           | Built       |
 | 1860-1875 | Super Mario Bros    | Built       |
 | 1880-1895 | The Monkey Wrench Gang | Built     |
+| 1920-1935 | Ghostbusters        | Built       |
 | 1940-1955 | Back to the Future  | Built       |
 | 1900-1912 | The Little Prince   | Built       |
 | 1960-1975 | Nineteen Eighty Four | Built      |
@@ -70,6 +71,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 2120-2133 | Paris Texas         | Built       |
 | 2140-2153 | Northern Exposure   | Built       |
 | 2200-2215 | The Wire            | Built       |
+| 2220-2233 | Six Feet Under      | Built       |
 | 2240-2250 | Harvest (Neil Young) | Built      |
 | 2300+     | Future worlds       | Available   |
 
@@ -103,6 +105,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 350-358   | Super Mario Bros         |
 | 360-366   | The Monkey Wrench Gang   |
 | 370-375   | The Little Prince        |
+| 380-389   | Ghostbusters             |
 | 390-399   | Back to the Future       |
 | 400-408   | Nineteen Eighty Four     |
 | 410-415   | Forbidden Planet         |
@@ -114,6 +117,7 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 470-475   | Paris Texas              |
 | 480-488   | Northern Exposure        |
 | 490-499   | The Wire                 |
+| 500-508   | Six Feet Under           |
 | 510-513   | Harvest (Neil Young)     |
 
 ## Item ID Allocation
@@ -125,17 +129,19 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 30001-39999 | Consumables         |
 | 101-109     | Portal Books/Film Reels/Paintings |
 | 110-199     | Story world souvenirs/collectibles |
+| 200-219     | Story world souvenirs (extended range) |
 | 134         | Stardew Valley game disc (Game Disc portal type) |
 | 136         | Far Cry 5 game disc (Game Disc portal type) |
-| 200-219     | Story world souvenirs (extended range) |
-| 215         | Stardew star fruit (souvenir) |
-| 220         | Edens Gate pin (Far Cry 5 souvenir) |
 | 137         | Super Mario Bros game cartridge (Game Disc portal type) |
-| 225         | Mushroom Kingdom gold coin (Super Mario Bros souvenir) |
 | 141         | Back to the Future film reel (portal) |
-| 245         | Flux capacitor keychain (Back to the Future souvenir) |
 | 157         | Harvest vinyl LP (portal)             |
 | 305         | Guitar pick (Harvest souvenir)        |
+| 20100-20130 | NPC clothing (body slot)              |
+| 20150-20157 | NPC clothing (legs slot)              |
+| 20160-20167 | NPC clothing (head slot)              |
+| 20170-20177 | NPC clothing (feet slot)              |
+| 20180-20185 | NPC clothing (neck slot)              |
+| 20190-20198 | NPC clothing (belt/gloves slot)       |
 
 ## Backlog (planned, not yet built)
 | Work                        | Medium      | Portal Type    | Notes                                      |
@@ -144,8 +150,6 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | Best in Show                | Film        | Film Reel      | Dog show mockumentary, Mayflower Kennel Club|
 | Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
 | Siamese Dream (Smashing Pumpkins)| Album (1993)| CD        | Shoegaze, distortion, Chicago, Billy Corgan |
-| Six Feet Under              | TV Series   | Film Reel      | Fisher & Sons funeral home, death, family   |
-
 ## Running the Server
 ```bash
 cd engine
