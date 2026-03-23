@@ -42,7 +42,9 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 900-903   | Tutorial (system)   | Inherited   |
 | 950-969   | The Shining         | Built       |
 | 970-989   | The Hobbit          | Built       |
-| 990+      | Future worlds       | Available   |
+| 1100-1112 | In Utero (Nirvana)  | Built       |
+| 1200-1212 | A Confederacy of Dunces | Built   |
+| 1300+     | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -57,6 +59,8 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 80-89     | The Shining          |
 | 90-99     | The Hobbit           |
 | 100+      | Library (Librarian=100) |
+| 200-209   | In Utero (Nirvana)   |
+| 201-209   | A Confederacy of Dunces |
 
 ## Item ID Allocation
 | Range       | Type                |
