@@ -69,7 +69,9 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 2100-2114 | Up in Smoke         | Built       |
 | 2120-2133 | Paris Texas         | Built       |
 | 2140-2153 | Northern Exposure   | Built       |
-| 2200+     | Future worlds       | Available   |
+| 2200-2215 | The Wire            | Built       |
+| 2240-2250 | Harvest (Neil Young) | Built      |
+| 2300+     | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -111,6 +113,8 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 460-467   | Up in Smoke              |
 | 470-475   | Paris Texas              |
 | 480-488   | Northern Exposure        |
+| 490-499   | The Wire                 |
+| 510-513   | Harvest (Neil Young)     |
 
 ## Item ID Allocation
 | Range       | Type                |
@@ -130,15 +134,15 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 225         | Mushroom Kingdom gold coin (Super Mario Bros souvenir) |
 | 141         | Back to the Future film reel (portal) |
 | 245         | Flux capacitor keychain (Back to the Future souvenir) |
+| 157         | Harvest vinyl LP (portal)             |
+| 305         | Guitar pick (Harvest souvenir)        |
 
 ## Backlog (planned, not yet built)
 | Work                        | Medium      | Portal Type    | Notes                                      |
 |-----------------------------|-------------|----------------|--------------------------------------------|
-| The Wire                    | TV Series   | Film Reel      | Baltimore, corners, docks, city hall        |
 | The Office                  | TV Series   | Film Reel      | Dunder Mifflin Scranton, mundane comedy     |
 | Best in Show                | Film        | Film Reel      | Dog show mockumentary, Mayflower Kennel Club|
 | Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
-| Harvest (Neil Young)        | Album (1972)| Vinyl LP       | Laurel Canyon, heart of gold, old man       |
 | Siamese Dream (Smashing Pumpkins)| Album (1993)| CD        | Shoegaze, distortion, Chicago, Billy Corgan |
 | Six Feet Under              | TV Series   | Film Reel      | Fisher & Sons funeral home, death, family   |
 
