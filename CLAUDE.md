@@ -76,7 +76,10 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 2300-2315 | The Office          | Built       |
 | 2320-2332 | Siamese Dream (Smashing Pumpkins) | Built |
 | 2340-2353 | Best in Show        | Built       |
-| 2400+     | Future worlds       | Available   |
+| 2400-2414 | Stand By Me         | Built       |
+| 2420-2433 | The Sandlot         | Built       |
+| 2380-2393 | MTVs The State      | Built       |
+| 2450+     | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -122,9 +125,12 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 490-499   | The Wire                 |
 | 500-508   | Six Feet Under           |
 | 510-513   | Harvest (Neil Young)     |
+| 570-578   | MTVs The State           |
 | 520-530   | The Office               |
 | 535-538   | Siamese Dream            |
 | 540-550   | Best in Show             |
+| 580-588   | Stand By Me              |
+| 590-598   | The Sandlot              |
 
 ## Item ID Allocation
 | Range       | Type                |
@@ -144,10 +150,16 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 158         | The Office film reel (portal)         |
 | 159         | Siamese Dream CD (portal)             |
 | 162         | Best in Show film reel (portal)       |
+| 163         | MTVs The State film reel (portal)     |
+| 164         | Stand By Me film reel (portal)        |
+| 166         | The Sandlot film reel (portal)        |
 | 305         | Guitar pick (Harvest souvenir)        |
 | 310         | Worlds Best Boss mug (The Office souvenir) |
 | 315         | Big Muff pedal (Siamese Dream souvenir) |
 | 320         | Busy Bee dog toy (Best in Show souvenir) |
+| 330         | Pudding cup (MTVs The State souvenir) |
+| 335         | Castle Rock cap (Stand By Me souvenir)   |
+| 340         | Scuffed baseball (The Sandlot souvenir)  |
 | 20100-20130 | NPC clothing (body slot)              |
 | 20150-20157 | NPC clothing (legs slot)              |
 | 20160-20167 | NPC clothing (head slot)              |
