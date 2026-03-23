@@ -44,7 +44,32 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 970-989   | The Hobbit          | Built       |
 | 1100-1112 | In Utero (Nirvana)  | Built       |
 | 1200-1212 | A Confederacy of Dunces | Built   |
-| 1300+     | Future worlds       | Available   |
+| 1300-1312 | Buffalo '66         | Built       |
+| 1400-1415 | Matilda             | Built       |
+| 1500-1510 | Goodnight Moon      | Built       |
+| 1520-1535 | Wayne's World       | Built       |
+| 1550-1568 | Jurassic Park       | Built       |
+| 1600-1614 | Die Die My Darling  | Built       |
+| 1700-1715 | Blonde on Blonde    | Built       |
+| 1740-1753 | On the Road         | Built       |
+| 1720-1735 | The Sopranos        | Built       |
+| 1800-1815 | Crime and Punishment | Built      |
+| 1820-1835 | Stardew Valley      | Built       |
+| 1840-1855 | Far Cry 5           | Built       |
+| 1860-1875 | Super Mario Bros    | Built       |
+| 1880-1895 | The Monkey Wrench Gang | Built     |
+| 1940-1955 | Back to the Future  | Built       |
+| 1900-1912 | The Little Prince   | Built       |
+| 1960-1975 | Nineteen Eighty Four | Built      |
+| 1980-1993 | Forbidden Planet    | Built       |
+| 2000-2015 | Seinfeld            | Built       |
+| 2020-2033 | Harold and Maude    | Built       |
+| 2040-2055 | Its Always Sunny    | Built       |
+| 2060-2073 | The Andy Griffith Show | Built    |
+| 2100-2114 | Up in Smoke         | Built       |
+| 2120-2133 | Paris Texas         | Built       |
+| 2140-2153 | Northern Exposure   | Built       |
+| 2200+     | Future worlds       | Available   |
 
 ## Mob ID Allocation
 | Range     | Zone           |
@@ -61,6 +86,31 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 100+      | Library (Librarian=100) |
 | 200-209   | In Utero (Nirvana)   |
 | 201-209   | A Confederacy of Dunces |
+| 210-216   | Buffalo '66              |
+| 220-228   | Matilda                  |
+| 230-233   | Goodnight Moon           |
+| 240-248   | Wayne's World            |
+| 250-260   | Jurassic Park            |
+| 270-276   | Die Die My Darling       |
+| 280-286   | Blonde on Blonde         |
+| 290-298   | The Sopranos             |
+| 300-305   | On the Road              |
+| 310-317   | Crime and Punishment     |
+| 320-330   | Stardew Valley           |
+| 335-344   | Far Cry 5                |
+| 350-358   | Super Mario Bros         |
+| 360-366   | The Monkey Wrench Gang   |
+| 370-375   | The Little Prince        |
+| 390-399   | Back to the Future       |
+| 400-408   | Nineteen Eighty Four     |
+| 410-415   | Forbidden Planet         |
+| 420-428   | Seinfeld                 |
+| 430-434   | Harold and Maude         |
+| 440-448   | Its Always Sunny         |
+| 450-457   | The Andy Griffith Show   |
+| 460-467   | Up in Smoke              |
+| 470-475   | Paris Texas              |
+| 480-488   | Northern Exposure        |
 
 ## Item ID Allocation
 | Range       | Type                |
@@ -71,6 +121,26 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | 30001-39999 | Consumables         |
 | 101-109     | Portal Books/Film Reels/Paintings |
 | 110-199     | Story world souvenirs/collectibles |
+| 134         | Stardew Valley game disc (Game Disc portal type) |
+| 136         | Far Cry 5 game disc (Game Disc portal type) |
+| 200-219     | Story world souvenirs (extended range) |
+| 215         | Stardew star fruit (souvenir) |
+| 220         | Edens Gate pin (Far Cry 5 souvenir) |
+| 137         | Super Mario Bros game cartridge (Game Disc portal type) |
+| 225         | Mushroom Kingdom gold coin (Super Mario Bros souvenir) |
+| 141         | Back to the Future film reel (portal) |
+| 245         | Flux capacitor keychain (Back to the Future souvenir) |
+
+## Backlog (planned, not yet built)
+| Work                        | Medium      | Portal Type    | Notes                                      |
+|-----------------------------|-------------|----------------|--------------------------------------------|
+| The Wire                    | TV Series   | Film Reel      | Baltimore, corners, docks, city hall        |
+| The Office                  | TV Series   | Film Reel      | Dunder Mifflin Scranton, mundane comedy     |
+| Best in Show                | Film        | Film Reel      | Dog show mockumentary, Mayflower Kennel Club|
+| Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
+| Harvest (Neil Young)        | Album (1972)| Vinyl LP       | Laurel Canyon, heart of gold, old man       |
+| Siamese Dream (Smashing Pumpkins)| Album (1993)| CD        | Shoegaze, distortion, Chicago, Billy Corgan |
+| Six Feet Under              | TV Series   | Film Reel      | Fisher & Sons funeral home, death, family   |
 
 ## Running the Server
 ```bash
@@ -307,6 +377,40 @@ See `WORLD_EXTRACTION_GUIDE.md` for the complete decomposition process. When add
 **Build:** zone config, entry room with return handler, all rooms, all room scripts, character mobs + scripts, conversation YAMLs, items + scripts, quest(s), mutators, portal item in Library.
 **Polish:** 5+ idle messages/room, 3+ idle commands/NPC, nouns in every room, sensory consistency, at least one secret, souvenir item, test walk-through.
 
+## Genre-Specific Extraction Guide
+
+When building a zone from a fictional work, the medium shapes what you extract and how you render it. Each genre has unique raw material that maps differently onto MUD rooms, mobs, items, and scripts.
+
+### Albums / Music
+**Raw material to extract:** Track listing (each track = one room), album title, year, historical context (what was happening in music and the world), band members and their roles, relationships with other bands or famous shows/events, art style and visual language of the era, cover art (describe it as a room noun), genre/subgenre. Lyrics provide room descriptions and NPC dialogue — but never quote them directly, instead translate their imagery into spatial/atmospheric descriptions. Instruments become nouns. Recording studios become hub rooms.
+
+**MUD mapping:** Hub = recording studio or listening space. Each track room captures the FEELING of the song — abstract/synesthetic (colors, textures, emotions made physical) or era-representative (the world the music came from). Use idle messages for the sonic landscape — what instruments sound like described as physical sensations. NPCs are band members, producers, figures from the songs. The album's emotional arc = the quest progression. Souvenir = something iconic (a harmonica, a guitar pick, a mixtape).
+
+### Films / TV Shows
+**Raw material to extract:** Every distinct location (each = a room), every named character (each = a mob), iconic props (items), key scenes (scripted events), visual style and color palette (ANSI theming), the emotional/narrative arc (quest steps), director's visual language, era/setting, soundtrack moments, famous dialogue lines (NPC idle commands and onAsk responses). For TV shows: pick the most iconic locations across all seasons rather than one episode.
+
+**MUD mapping:** Entry room = the establishing shot location. Hub = the most-visited location (bar, office, home). Rooms follow the film's geography. NPCs speak in character voice. Easter eggs are deep-cut references that reward fans. The zone's mutator should capture the overall TONE (dread, comedy, anxiety, warmth). Quest = "experience the story" — visit key locations, witness key moments.
+
+### Books / Novels
+**Raw material to extract:** Every described location, every named character, the prose style (this becomes the room description voice), key objects and symbols, the plot structure, themes and how they can become mechanical (alignment shifts, stat changes, quest gates), the author's descriptive palette (colors, smells, textures), historical period, the book's relationship to other works.
+
+**MUD mapping:** Room descriptions should echo the author's prose style — Kerouac rooms feel breathless and long, Dostoevsky rooms feel feverish and cramped, Saint-Exupery rooms feel luminous and sad. The narrator's perspective shapes what idle messages notice. Symbolism becomes interactive — objects that represent themes should have special onCommand handlers. Reading-within-reading (books that contain books) = nested interactivity.
+
+### Poetry
+**Raw material to extract:** The poem's images (each major image = a room), the emotional movement, the specific sensory details (these become nouns and idle messages), the poet's voice, the poem's relationship to the poet's life, the historical moment, the form itself (a sonnet's turn can be a quest pivot, a villanelle's repetition can be a looping room).
+
+**MUD mapping:** Small, intimate zones (5-10 rooms). Every word matters more. Idle messages carry the weight. NPCs are sparse — sometimes just one presence. The poem's emotional arc IS the quest. These zones should feel like being inside a single sustained feeling.
+
+### Video Games
+**Raw material to extract:** The game world's locations (each distinct area = a room), NPCs and their roles, items/weapons/tools, game mechanics that can be translated (farming → plant/harvest commands, combat → hostile mobs, puzzles → command sequences), the game's visual style, the game's tone (pastoral, apocalyptic, whimsical), progression systems, collectibles, boss encounters, the game's relationship to its genre.
+
+**MUD mapping:** Translate the game's core loop into MUD interactions. Farming games: plant/harvest/fish commands. Shooters: hostile mobs + terrain navigation. RPGs: quest chains + NPC dialogue trees. Puzzles: command sequences that unlock exits. Respect the source game's pacing — Stardew Valley should feel slow and gentle, Far Cry should feel tense and beautiful.
+
+### Paintings / Visual Art
+**Raw material to extract:** Every element in the composition (foreground, midground, background = rooms), the artist's technique and style, the historical context, what the painting FEELS like to stand inside, the color palette, the light source, the movement or stillness, the scale.
+
+**MUD mapping:** Small zones (5-12 rooms). You literally walk into the painting. Rooms map to compositional zones. The artist may appear as an NPC. Idle messages capture the painting's light and texture. These zones should feel like the world stopped moving — you are inside a frozen moment.
+
 ## Multiplayer Design Rules
 
 See `MULTIPLAYER_DESIGN.md` for complete rules. Key points:
@@ -318,13 +422,60 @@ See `MULTIPLAYER_DESIGN.md` for complete rules. Key points:
 - **Important items:** Create via `user.GiveItem(CreateItem(id))` in scripts, not floor spawns, to avoid race conditions.
 - **Easter egg hints:** Always provide in-game hints (NPC idle chatter, room idle messages, NPC-to-NPC conversations) so players can discover secrets without external knowledge.
 
+## Interaction Command Vocabulary
+
+Every zone uses commands beyond basic movement (north/south/east/west/up/down) to let players interact with the world. To keep the experience consistent and discoverable, we maintain a standard set of interaction verbs. Every zone should draw from this vocabulary rather than inventing new verbs without reason.
+
+### Standard Interaction Verbs
+| Verb | Usage | Example |
+|------|-------|---------|
+| `look <noun>` | Examine something in the room description | `look axe`, `look painting` |
+| `read <noun>` | Read a book, sign, scrapbook, letter | `read bible`, `read scrapbook` |
+| `say <words>` | Speak aloud, trigger dialogue | `say goodnight moon`, `say schwing` |
+| `ask <mob> <topic>` | Ask an NPC about something | `ask grant about raptors` |
+| `show <item> to <mob>` | Show an inventory item to an NPC | `show key to jack` |
+| `give <item> to <mob>` | Give an item to an NPC | `give brooch to alan` |
+| `use <item>` | Use an item (portal entry, souvenir) | `use harmonica`, `use reel` |
+| `play <instrument/item>` | Play music, play a game | `play harmonica`, `play guitar` |
+| `open <thing>` | Open a book, door, container | `open book`, `open elevator` |
+| `enter <thing>` | Step into a portal, painting, etc. | `enter painting`, `enter portal` |
+| `search` | Search for hidden things (secret exits) | `search` in any room |
+| `sit` | Sit down (triggers scene in some rooms) | `sit` in therapy office, diner |
+| `stand still` | Don't move (T. Rex, The Chokey) | `stand still` in T. Rex paddock |
+| `wait` / `listen` | Pause and absorb atmosphere | `wait` in Des Moines, `listen` in warehouse |
+| `hide` | Take cover (raptor kitchen, etc.) | `hide` in the kitchen |
+| `jump` | Jump (Mario, platformer rooms) | `jump`, `hit block` |
+| `kneel` / `bow` | Show reverence or submission | `kneel` at crossroads, `bow` backstage |
+| `pray` | Pray (religious settings) | `pray` in chapel |
+| `sing` / `headbang` | Musical participation | `sing` in Mirthmobile |
+| `burn <thing>` | Set fire to something | `burn billboard` |
+| `sabotage` / `wrench` | Eco-sabotage (Monkey Wrench) | `sabotage`, `cut wire` |
+| `fish` / `cast` | Fishing | `fish` at pier |
+| `plant` / `hoe` / `mine` / `dig` | Resource gathering (game worlds) | `plant` on farm |
+| `drink` / `eat` / `taste` | Consume food/drink | `eat mush`, `drink` |
+| `confess` | Confess (Crime & Punishment, Die Die) | `confess` in Porfiry's office |
+| `hitchhike` / `thumb` | Hitch a ride | `hitchhike` on highway |
+
+### Per-Zone Command Registry
+Each zone should document its non-obvious commands in comments at the top of the entry room's .js file. Format:
+```javascript
+// ZONE COMMANDS: say goodnight moon (1500), play mittens (1507), eat mush (1508), count stars (1509)
+```
+
+## Collectible Souvenir Tracking
+
+Each zone awards a souvenir item on quest completion. To let players track how many they've collected:
+- Each souvenir's quest-completion script should also set `user.SetMiscCharacterData("souvenir_<zone>", "collected")`
+- A future "collections" command in the Library can count all `souvenir_*` keys to show progress like "You have collected 12 of 25 world souvenirs."
+- The Librarian NPC can be given an `onAsk` handler for "collection" or "souvenirs" that checks the player's collection count.
+
 ## CRITICAL: GoMUD Naming & Format Rules
 
 See `GOMUD_RULES.md` for the complete list. Key rules that cause server PANIC if violated:
 
-1. **File naming:** `{id}-{ConvertForFilename(name)}.yaml` — lowercase, skip apostrophes, non-alphanum → underscore
+1. **File naming:** `{id}-{ConvertForFilename(name)}.yaml` — lowercase, non-alphanum → underscore. Periods become underscore (so "Mr." → "mr_", creating double underscores like `mr__wormwood`). **CRITICAL: Do NOT use apostrophes or exclamation marks in zone names, quest names, or item names** — the engine keeps them in the expected path, creating filesystem mismatches. Strip them from the `name:` field (e.g. "Waynes World" not "Wayne's World", "Die Die My Darling" not "Die! Die! My Darling!").
 2. **Item IDs < 10000** go in `other-0/`. IDs 10000-19999 = weapons, 20000-29999 = armor, 30000+ = consumables
-3. **Zone folders** must match zone config `name:` lowercased with spaces → underscores
+3. **Zone folders** must match zone config `name:` lowercased with spaces → underscores. The `name:` field must NOT contain apostrophes, exclamation marks, or other special punctuation.
 4. **Mob YAML:** `name`, `description`, `raceid`, `level` go INSIDE `character:` block, not top-level. No `hateraces` field (use `hates`).
 5. **Room nouns:** flat `key: string` pairs, NOT nested maps with `description:`
 6. **No sign/signtext in room YAML.** Signs are runtime-only via `scribe` command.

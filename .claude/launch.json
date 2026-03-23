@@ -12,6 +12,18 @@
         "CONFIG_PATH": "../config.yaml",
         "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
+    },
+    {
+      "name": "at-mud",
+      "runtimeExecutable": "go",
+      "runtimeArgs": ["run", "."],
+      "port": 8081,
+      "autoPort": false,
+      "cwd": "engine",
+      "env": {
+        "CONFIG_PATH": "../at-config.yaml",
+        "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+      }
     }
   ]
 }
