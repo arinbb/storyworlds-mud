@@ -10,5 +10,7 @@ Server:
     fictional worlds.
   MudName: StoryWorlds
   NextRoomId: 2486
+GamePlay:
+  ContainerSizeMax: 50
 SpecialRooms:
   StartRoom: 1
