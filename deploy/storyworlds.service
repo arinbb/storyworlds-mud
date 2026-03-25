@@ -4,23 +4,13 @@ After=network.target
 
 [Service]
 Type=simple
-User=storyworlds
-Group=storyworlds
-WorkingDirectory=/opt/storyworlds
-ExecStart=/opt/storyworlds/storyworlds-server
-Restart=always
+User=root
+WorkingDirectory=/home/ubuntu/gomud/engine
+Environment=CONFIG_PATH=../config.yaml
+Environment=ANTHROPIC_API_KEY=
+ExecStart=/home/ubuntu/gomud/GoMud
+Restart=on-failure
 RestartSec=5
-StandardOutput=journal
-StandardError=journal
-Environment=CONFIG_PATH=/opt/storyworlds/config.yaml
-
-# Security hardening
-NoNewPrivileges=true
-ProtectSystem=strict
-ReadWritePaths=/opt/storyworlds
-
-# Allow binding to port 80
-AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
 WantedBy=multi-user.target
