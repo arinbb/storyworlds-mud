@@ -12,5 +12,16 @@ Server:
   NextRoomId: 2486
 GamePlay:
   ContainerSizeMax: 50
+Integrations:
+  AI:
+    Enabled: true
+    Provider: anthropic
+    AnthropicKey: ""  # Set via ANTHROPIC_API_KEY env var
+    AnthropicModel: claude-sonnet-4-20250514
+    MaxTokens: 150
+    MemorySize: 5
+    RateLimit: 20
+    RateWindow: 600
+    TimeoutSecs: 10
 SpecialRooms:
   StartRoom: 1
