@@ -16,7 +16,7 @@ Integrations:
   AI:
     Enabled: true
     Provider: anthropic
-    AnthropicKey: ""  # Set via ANTHROPIC_API_KEY env var
+    AnthropicKey: YOUR_API_KEY_HERE
     AnthropicModel: claude-sonnet-4-20250514
     MaxTokens: 150
     MemorySize: 5
