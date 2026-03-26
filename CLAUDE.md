@@ -514,5 +514,20 @@ See `GOMUD_RULES.md` for the complete list. Key rules that cause server PANIC if
 
 **Always validate filenames before committing.** Run the server locally to catch panics early.
 
+## File Editing Rules
+When working with YAML content files, always validate YAML syntax after edits. Run a YAML lint check before committing. Never batch-edit hundreds of YAML files without validating a sample first.
+
+## Project Setup
+Before starting any new project, confirm the target directory with the user. Never build inside an existing unrelated project directory.
+
+## Bug Fixing Guidelines
+When fixing bugs, avoid overly aggressive auto-fix scripts that touch many files at once. Fix targeted files, validate, then expand scope incrementally.
+
+## Technology Choices
+Do not introduce new frameworks or tooling (e.g., Godot, heavy build systems) unless the user explicitly requests them. For web apps, prefer vanilla HTML/CSS/JS or the stack already in use.
+
+## Deployment
+For GitHub Pages deployment, default to legacy/static deployment mode unless the user specifies otherwise. Verify the site is live after deploying.
+
 ## Git
 Commit at natural milestones. Don't wait too long between commits.
