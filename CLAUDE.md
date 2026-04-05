@@ -171,6 +171,9 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 | Work                        | Medium      | Portal Type    | Notes                                      |
 |-----------------------------|-------------|----------------|--------------------------------------------|
 | Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
+## Feedback Log
+Players can type `feedback <message>` from any room. The command auto-detects context (room, zone, NPCs present, subject category) and logs to `engine/_datafiles/world/storyworlds/feedback.log`. Admin users see feedback in real-time. **Check this log file regularly for bug reports, suggestions, and things that need fixing or development.** On the server: `cat ~/gomud/engine/_datafiles/world/storyworlds/feedback.log`
+
 ## Running the Server
 ```bash
 cd engine
