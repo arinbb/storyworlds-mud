@@ -170,18 +170,42 @@ ZONE_FRAMEWORK.md                # Detailed zone creation guide with templates
 ## Backlog (planned, not yet built)
 | Work                        | Medium      | Portal Type    | Notes                                      |
 |-----------------------------|-------------|----------------|--------------------------------------------|
-| Billy Madison               | Film        | Film Reel      | Back to school comedy, academic decathlon   |
+| (nothing currently planned) | —           | —              | —                                          |
+
 ## Feedback Log
-Players can type `feedback <message>` from any room. The command auto-detects context (room, zone, NPCs present, subject category) and logs to `engine/_datafiles/world/storyworlds/feedback.log`. Admin users see feedback in real-time. **Check this log file regularly for bug reports, suggestions, and things that need fixing or development.** On the server: `cat ~/gomud/engine/_datafiles/world/storyworlds/feedback.log`
+Players can type `feedback <message>` (also `idea` or `suggest`) from any room. The command auto-detects context (room, zone, NPCs present, subject category) and logs to `engine/_datafiles/world/storyworlds/feedback.log`. Admin users see feedback in real-time. **Check this log file regularly for bug reports, suggestions, and things that need fixing or development.** On the server: `cat ~/gomud/engine/_datafiles/world/storyworlds/feedback.log`
+
+## Custom Engine Features
+These are StoryWorlds-specific changes to the GoMUD engine (not in upstream):
+
+- **`hint` command** — Players type `hint` to get a contextual nudge. Add `hints:` list to any room YAML. Uses `util.Rand` for random selection. Falls back to "nothing draws your attention here" if no hints defined.
+- **Persistent secret exit discovery** — When `search` finds a secret exit, it's stored in `MiscData` (`disc_r<roomId>_<exitName>`). On future searches the exit is always shown without re-rolling.
+- **`feedback` / `idea` / `suggest`** — All three aliases route to the same feedback handler. Logs to `feedback.log` with auto-detected context.
+- **ANSI-aware word wrap** — `util.SplitString` and `util.WordWrap` are ANSI-tag-aware; noun descriptions and `SendUserMessage` wrap at 80 chars.
+- **AI NPC dialogue** — `internal/aiservice/anthropic.go` implements the Anthropic provider. NPCs whose `onAsk` scripts return `false` fall through to the AI. Config in `config.yaml` under `Integrations.AI`.
+- **Room `hints:` YAML field** — Added to `internal/rooms/rooms.go` Room struct. List of strings shown randomly on `hint` command.
 
 ## Running the Server
 ```bash
 cd engine
 CONFIG_PATH=../config.yaml go run .
 # Connect: telnet localhost 33333
-# Web: http://localhost/webclient
+# Web: http://localhost/webclient  (HTTP only, not HTTPS)
 # Default login: admin / password
 ```
+
+## Deploying to Production
+```bash
+# Push local changes first
+git push origin main && git -C engine push origin master
+
+# Deploy on Oracle server (Go is at /usr/bin/go)
+ssh -i ~/.ssh/storyworlds_oracle ubuntu@150.136.199.80 \
+  "cd ~/gomud && git pull --recurse-submodules && \
+   cd engine && /usr/bin/go build -o ../GoMud . && \
+   sudo systemctl restart storyworlds"
+```
+Server: `150.136.199.80` · Service: `storyworlds.service` · Web: `http://150.136.199.80/webclient`
 
 ---
 
@@ -471,7 +495,10 @@ Every zone uses commands beyond basic movement (north/south/east/west/up/down) t
 | `play <instrument/item>` | Play music, play a game | `play harmonica`, `play guitar` |
 | `open <thing>` | Open a book, door, container | `open book`, `open elevator` |
 | `enter <thing>` | Step into a portal, painting, etc. | `enter painting`, `enter portal` |
-| `search` | Search for hidden things (secret exits) | `search` in any room |
+| `search` | Search for hidden things (secret exits — discoveries are remembered permanently) | `search` in any room |
+| `hint` | Get a contextual nudge for the current room (defined in room YAML `hints:` field) | `hint` anywhere |
+| `visited` | Show which zones you've explored and % completion of current zone | `visited` |
+| `feedback` / `idea` / `suggest` | Leave feedback, bug reports, or suggestions (logged + sent to admins) | `feedback the exit sign is confusing` |
 | `sit` | Sit down (triggers scene in some rooms) | `sit` in therapy office, diner |
 | `stand still` | Don't move (T. Rex, The Chokey) | `stand still` in T. Rex paddock |
 | `wait` / `listen` | Pause and absorb atmosphere | `wait` in Des Moines, `listen` in warehouse |
